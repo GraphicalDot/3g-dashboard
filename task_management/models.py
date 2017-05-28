@@ -14,7 +14,7 @@ status_fields = [('PENDING', 'pending'), ('COMPLETE', 'complete'), ('UNDER REVIE
 
 class Task(models.Model):
     """
-    Task model for assigning task to the content uploader.
+    Task model for assigning taskto the content uploader.
     """
     # title, description, progress_status, assigned_by, assigned_to
     title = models.CharField(max_length=250, blank=False)
