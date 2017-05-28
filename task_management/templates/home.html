@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    {% block extend_head%} {% endblock%}
+</head>
+<body>
+    <nav>
+        <div class="container nav-wrapper">
+            <a class="brand-logo" href="{% url 'task_management:dashboard' %}">GENIUS</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a>{{ user }}</a></li>
+                <li><a href="{% url 'task_management:logout' %}">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+    {% block body %}
+    {% endblock %}
+    </div>
+</body>
+</html>

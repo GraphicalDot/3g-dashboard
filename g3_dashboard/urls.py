@@ -15,10 +15,24 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-# from rest_framework import routers
+from django.views.generic import RedirectView
+from course_management import views
+
+from . import settings
 
 urlpatterns = [
-    # url(r'^', include(router.urls)),
+    url(r'^$', RedirectView.as_view(url='/admin')),
     url(r'^admin/', admin.site.urls),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^tasks/', include('task_management.urls'), name='tasks'),
+    url(r'^filter/fields/', views.filter_field),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ]
+
+

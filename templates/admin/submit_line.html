@@ -1,0 +1,80 @@
+{% load i18n admin_urls %}
+{% load admin_template_tag %}
+<script>
+        // pop up box when save a user
+        var selected_options = function(){
+            var temp = '<div style="color:#ff9933; text-align:left; margin:3%;">';
+
+            var collect_permissions = '<b style="color:#99cc00;">:: PERMISSIONS LIST ::</b></br>';
+            pp = $('#id_user_permissions_to').find('option');
+            pp.each(function( index ) {
+              collect_permissions=collect_permissions + "<p>"+(index+1) + " >  " + $( this ).text()+'</p>'
+            });
+
+            var collect_group = '<b style="color:#99cc00;">:: GROUPS LIST ::</b></br>';
+            gp = $('#id_groups_to').find('option');
+            gp.each(function(index) {
+              collect_group = collect_group + "<p>"+(index+1) + " >  " + $( this ).text()+'</p>'
+            });
+
+            var final_msg_list = (gp.length > 0 ? collect_group+'<hr><br>' : '') + (pp.length > 0 ? collect_permissions : '')
+
+            return '<div style="color:#ff9933; text-align:left; margin-left:5%;">'+final_msg_list+'</div>';
+
+        }
+        function save_submit(id_name){
+            $.confirm({
+                title: 'Alert!',
+                content: '<span style="color:#ff99bb">** Confirm Your Group/Permissions Before Make A Change! **</span></br></br>'+selected_options(),
+                theme: 'supervan',
+                closeIcon: true,
+                buttons: {
+                    confirm: function () {
+                        $('#'+id_name).click();
+                    },
+
+                    cancel: function () {
+                        // Nothing to do
+                    }
+                }
+            });
+        }
+    </script>
+
+<div class="submit-row">
+{% if opts.app_config.verbose_name == 'Employee' and opts.verbose_name == 'my user' %}
+    {% if show_save %}
+        <input type="button" onclick="save_submit('_save_cus')" value="{% trans 'Save' %}" class="default" name="_save" />
+        <input type="submit" style="display:none" id="_save_cus" value="{% trans 'Save' %}" class="default" name="_save" />
+    {% endif %}
+{% endif %}
+{% if show_delete_link %}
+    {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
+    <p class="deletelink-box"><a href="{% add_preserved_filters delete_url %}" class="deletelink">{% trans "Delete" %}</a></p>
+{% endif %}
+
+{% if opts.app_config.verbose_name == 'Employee' and opts.verbose_name == 'my user' %}
+    {% if show_save_as_new %}
+        <input type="button" onclick="save_submit('_saveasnew_cus')" value="{% trans 'Save as new' %}" name="_saveasnew" />
+        <input type="submit" style="display:none" id="_saveasnew_cus" value="{% trans 'Save as new' %}" name="_saveasnew" />
+    {% endif %}
+    {% if show_save_and_add_another %}
+        <input type="button" onclick="save_submit('_addanother_cus')" value="{% trans 'Save and add another' %}" name="_addanother" />
+        <input type="submit" style="display:none" id="_addanother_cus" value="{% trans 'Save and add another' %}" name="_addanother" />
+    {% endif %}
+    {% if show_save_and_continue %}
+        <input type="button" onclick="save_submit('_continue_cus')" value="{% trans 'Save and continue editing' %}" name="_continue" />
+        <input type="submit" style="display:none" id="_continue_cus" value="{% trans 'Save and continue editing' %}" name="_continue" />
+    {% endif %}
+{% else %}
+    {% if show_save_as_new %}
+        <input type="submit" value="{% trans 'Save as new' %}" name="_saveasnew" />
+    {% endif %}
+    {% if show_save_and_add_another %}
+        <input type="submit" value="{% trans 'Save and add another' %}" name="_addanother" />
+    {% endif %}
+    {% if show_save_and_continue %}
+        <input type="submit" value="{% trans 'Save and continue editing' %}" name="_continue" />
+    {% endif %}
+{% endif %}
+</div>

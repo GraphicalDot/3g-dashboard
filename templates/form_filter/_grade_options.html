@@ -1,0 +1,9 @@
+{% for grade in values%}
+
+<li>
+    <label for="id_select_grade_{{counter}}">
+        <input id="id_select_grade_{{counter}}" name="select_grade" type="checkbox" value="{{grade.code}}" />
+        {{grade.title}}
+    </label>
+</li>
+{% endfor %}

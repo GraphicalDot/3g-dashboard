@@ -1,0 +1,205 @@
+{% extends 'home.html' %}
+{% block extend_head %}
+<script>
+        var filtered_permissions;
+        $(document).ready(function() {    
+            var uploader_id = $('#uploader').val();
+            $.ajax({
+                url: "test_ajax",
+                method: "get",
+                dataType: 'json',
+                data: {'uploader_id': uploader_id},
+                success: function(data){
+                    filtered_permissions = data;
+                    console.log('filtered permissions', filtered_permissions);
+                },
+                error: function(){
+                    alert('Nothing')
+                }
+            });
+            $('select').material_select();
+            });
+
+        
+        function filterCourses(classChoice){
+            var data_id = classChoice.value;
+            for(var i=0; i<filtered_permissions.course_permissions.length; i++){
+                console.log('checking:',data_id, filtered_permissions.course_permissions[i].class_category_id)
+                if(filtered_permissions.course_permissions[i].class_category_id == data_id){
+                    console.log('Match found !!!')
+                    var courses = "<option value="+ filtered_permissions.course_permissions[i].code +">"+ filtered_permissions.course_permissions[i].title +"</option>";
+                    console.log(courses)
+                    $('#course_permission').append(courses);
+                }
+            }
+           
+            $(document).ready(function() {
+            $('select').material_select();
+
+        });
+        }
+
+
+        function filterSubjects(courseChoice){
+            var data_id = courseChoice.value;
+            for(var i=0; i<filtered_permissions.subject_permissions.length ; i++){
+                if(filtered_permissions.subject_permissions[i].course_id == data_id){
+                    var subjects = "<option value="+ filtered_permissions.subject_permissions[i].code +">"+ filtered_permissions.subject_permissions[i].title +"</option>";
+                    $('#subject_permission').append(subjects);
+                }
+            }
+
+            $(document).ready(function() {
+            $('select').material_select();
+
+        });
+        };
+
+
+        function filterChapters(subjectChoice){
+            var data_id = subjectChoice.value;
+            for(var i=0; i<filtered_permissions.chapter_permissions.length ; i++){
+                if(filtered_permissions.chapter_permissions[i].subject_id == data_id){
+                    var subjects = "<option value="+ filtered_permissions.chapter_permissions[i].code +">"+ filtered_permissions.chapter_permissions[i].title +"</option>";
+                    $('#chapter_permission').append(subjects);
+                }
+            }
+
+            $(document).ready(function() {
+            $('select').material_select();
+        });
+        };
+
+        function filterTopics(chapterChoice){
+            var data_id = chapterChoice.value;
+            for(var i=0; i<filtered_permissions.topic_permissions.length ; i++){
+                if(filtered_permissions.topic_permissions[i].chapter_id == data_id){
+                    var subjects = "<option value="+ filtered_permissions.topic_permissions[i].code +">"+ filtered_permissions.topic_permissions[i].title +"</option>";
+                    $('#topic_permission').append(subjects);
+                }
+            }
+
+            $(document).ready(function() {
+            $('select').material_select();
+        });
+        };
+
+        function filterModules(topicChoice){
+            var data_id = topicChoice.value;
+            for(var i=0; i<filtered_permissions.module_permissions.length ; i++){
+                if(filtered_permissions.module_permissions[i].topic_id == data_id){
+                    console.log('matched', filtered_permissions.module_permissions[i]);
+                    var subjects = "<option value="+ filtered_permissions.module_permissions[i].code +">"+ filtered_permissions.module_permissions[i].title +"</option>";
+                    $('#module_permission').append(subjects);
+                }
+            }
+
+            $(document).ready(function() {
+            $('select').material_select();
+        });
+        };
+        
+        $('.datepicker').pickadate({
+            selectMonths: true,
+            selectYears: 15
+        });
+
+        
+        $('#add_choice').click(function(){
+            var choice = "<br/><div class='row' id='div "+counter+" '><div class='col-sm-4'>Choice: "+counter+" <input type='text' placeholder='Choice "+counter+"' name='choice' id='choice"+counter+"' /></div><div class='col-sm-8'><input type='file' name='get_image' id='imgInp"+ counter+"' onchange='readURL(this);' multiple/><br /><img id='blah"+counter+"' style='display:none' alt='your image' /></div></div>"
+            $('#form-test').append(choice)
+            return true;
+   });
+
+
+    </script>
+{% endblock %}
+
+{% block body%}
+<!--<div class="container">-->
+    <h1>Assign Task</h1>
+    <div class="row">
+        <form class="col s8" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div>
+                    <label>Class</label>
+                    <select name="class_permission" id="class_permission" onchange="filterCourses(this)">
+                    <!--<select name="course_permission" id="course_permission" onmousedown="this.value" onchange="test()">-->
+                        <option value="" disabled selected>Select Class</option>
+                        {% for class in class_data %}
+                            <option value="{{ class.code }}">{{ class.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label>Steram</label>
+                    <select name="course_permission" id="course_permission" onchange="filterSubjects(this)">
+                        <option value="" disabled selected>Select Steram</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Subject</label>
+                    <select name="subject_permission" id="subject_permission" onchange="filterChapters(this)">
+                        <option value="" disabled selected>Select Subject</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Chapter</label>
+                    <select name="chapter_permission" id="chapter_permission" onchange="filterTopics(this)">
+                        <option value="" disabled selected>Select Chapter</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Concept</label>
+                    <select name="topic_permission" id="topic_permission" onchange="filterModules(this)">
+                        <option value="" disabled selected>Select Concept</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Module</label>
+                    <select name="module_permission" id="module_permission">
+                        <option value="" disabled selected>Select module</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <input id="uploader" type="text" value="{{ uploader.id }}" disabled hidden>
+            </div>
+
+            <div class="row">
+                <span style="color: red">{{ form.errors.title }}</span>
+                <div class="input-field col s6">
+
+                    <input id="title" type="text" data-length="50" name="title" maxlength="50" value="{{ form.title.value|default_if_none:"" }}">
+                    <label for="title">Title</label>
+                </div>
+            </div>
+            <div class="row">
+                <span style="color: red">{{ form.errors.title }}</span>
+                <div class="input-field col s12">
+                    <input id="description" type="text" class="validate" name="description" value="{{ form.description.value|default_if_none:"" }}">
+                    <label for="description">Task Description</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <span style="color: red">{{ form.errors.title }}</span>
+                <label>Select start date</label>
+                <input type="date" class="datepicker" name="assigned_on" value="{{ form.assigned_on.value }}">
+            </div>
+
+            <div class="row">
+                <span style="color: red">{{ form.errors.title }}</span>
+                <label>Select due date</label>
+                <input type="date" class="datepicker" name="due_date" value="{{ form.due_date.value }}">
+            </div>
+
+            <div class='row'>
+                <button type='submit' class='col s12 btn btn-large waves-effect indigo'>Submit Task</button>
+              </div>
+        </form>
+    </div>
+    <!--</div>-->
+{% endblock %}

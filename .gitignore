@@ -1,3 +1,6 @@
 .idea
 *.pyc
 */migrations
+db.*
+*.ini
+static/

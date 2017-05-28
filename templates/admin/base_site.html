@@ -1,0 +1,99 @@
+{% extends "admin/base.html" %}
+{% load i18n static %}
+{% block extrastyle %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.0/jquery-confirm.min.css">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.0/jquery-confirm.min.js"></script>
+{% endblock %}
+{% block title %}{{ title }} | 3G Admin-Dash Board {% endblock %}
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">3G Admin Dash Board</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+{% block footer %}
+<div id="footer">
+<script>
+    function filter_field(data, field_name, child_names){
+        console.log(data);
+        data['field_name'] = field_name;
+        $.post( "/filter/fields/", data, function( data ) {
+            console.log(data);
+            if(data[0]){
+                if(data[0].hasOwnProperty('html_add_on_id')){
+                    child_names = data[0]['html_add_on_id'];
+                }
+
+                if(data[0].hasOwnProperty('null_option_message')){
+                    var id = 'id_help_'+child_names;
+                    $("#"+id).html('');
+                    $("#id_"+child_names).after("<p id='"+id+"' class='help' style='color:red;'>"+data[0]['null_option_message']+"</p>");
+                }
+                else{
+                    $( "#id_help_"+child_names ).html('');
+                }
+                console.log(child_names);
+                $("#id_"+child_names).html(data[0]['option_data']);
+                $("#id_hidden_"+child_names).val(data[0]['hidden_field_value']);
+             }
+        });
+    }
+
+    function collect_data(){
+        data = {}
+        data['csrfmiddlewaretoken'] = '{{ csrf_token }}';
+        data['model_name'] = '{{ opts.model_name }}';
+        data['country'] = $('#id_country').val();
+        data['board'] = $('#id_select_board').val();
+
+        // collect grade data
+        data['grade'] = []
+        $('input[name="select_grade"]:checked').each(function(){
+            data['grade'].push($(this).val());
+        });
+
+        data['select_grade'] = $('#id_select_grade').val();
+
+        data['state'] = $('#id_select_state').val();
+        data['stream'] = $('#id_select_stream').val();
+        data['subject'] = $('#id_select_subject').val();
+
+        return data;
+    }
+
+    $('#id_country').change(function(){
+        filter_field(collect_data(), 'country', 'select_state');
+    });
+
+    $('#id_select_state').change(function(){
+        filter_field(collect_data(), 'state', 'select_board');
+    });
+
+    $('#id_select_board').change(function(){
+        filter_field(collect_data(), 'board', 'select_grade');
+    });
+
+    $('#id_select_grade').change(function(){
+        filter_field(collect_data(), 'grade', 'select_stream');
+    });
+
+    $('#id_select_stream').change(function(){
+        filter_field(collect_data(), 'stream', 'subject');
+    });
+
+    $('#id_select_subject').change(function(){
+        filter_field(collect_data(), 'subject', 'select_chapter');
+    });
+
+    //$('#id_chapter').change(function(){
+    //    console.log('Country Change ...');
+    //});
+
+    if("{{ opts.model_name }}" == "classcategory"){
+        $('#top_form_msg').html("<li style='color:blue;'>Select grade or enter in title for new or both.</li>");
+        // Add a msg on top of form.
+    }
+
+</script>
+</div>
+{% endblock %}

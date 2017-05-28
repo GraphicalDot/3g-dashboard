@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Course Management Classes &#8212; Admin Dash v0.1 documentation</title>
+    <title>Avail Model classes &#8212; Admin Dash v0.1 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,6 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Avail API" href="api_call.html" />
     <link rel="prev" title="Project Summary" href="project_intro.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -42,12 +43,34 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-course_management.models">
-<span id="course-management-classes"></span><h1>Course Management Classes<a class="headerlink" href="#module-course_management.models" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="avail-model-classes">
+<h1>Avail Model classes<a class="headerlink" href="#avail-model-classes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-classes.models">
+<span id="category-manager"></span><h2>Category manager<a class="headerlink" href="#module-classes.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="classes.models.ClassCategory">
+<em class="property">class </em><code class="descclassname">classes.models.</code><code class="descname">ClassCategory</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#classes.models.ClassCategory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manage Category Of classes.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="classes.models.MyUser">
+<em class="property">class </em><code class="descclassname">classes.models.</code><code class="descname">MyUser</code><span class="sig-paren">(</span><em>id</em>, <em>password</em>, <em>last_login</em>, <em>is_superuser</em>, <em>username</em>, <em>first_name</em>, <em>last_name</em>, <em>email</em>, <em>is_staff</em>, <em>is_active</em>, <em>date_joined</em>, <em>owner</em><span class="sig-paren">)</span><a class="headerlink" href="#classes.models.MyUser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-course_management.models">
+<span id="course-management-classes"></span><h2>Course Management Classes<a class="headerlink" href="#module-course_management.models" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="course_management.models.Chapter">
 <em class="property">class </em><code class="descclassname">course_management.models.</code><code class="descname">Chapter</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#course_management.models.Chapter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Chapter class for CRUD</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="course_management.models.CommonInfo">
+<em class="property">class </em><code class="descclassname">course_management.models.</code><code class="descname">CommonInfo</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#course_management.models.CommonInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract class for reduce size of lines .. ;)</p>
 </dd></dl>
 
 <dl class="class">
@@ -74,6 +97,13 @@
 <dd><p>Topic class for CRUD</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="course_management.models.sender">
+<code class="descclassname">course_management.models.</code><code class="descname">sender</code><a class="headerlink" href="#course_management.models.sender" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#course_management.models.ModuleData" title="course_management.models.ModuleData"><code class="xref py py-class docutils literal"><span class="pre">ModuleData</span></code></a></p>
+</dd></dl>
+
+</div>
 </div>
 
 
@@ -81,11 +111,21 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Avail Model classes</a><ul>
+<li><a class="reference internal" href="#module-classes.models">Category manager</a></li>
+<li><a class="reference internal" href="#module-course_management.models">Course Management Classes</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="project_intro.html" title="previous chapter">Project Summary</a></li>
+      <li>Next: <a href="api_call.html" title="next chapter">Avail API</a></li>
   </ul></li>
 </ul>
 </div>

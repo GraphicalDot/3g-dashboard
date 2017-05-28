@@ -22,7 +22,6 @@ import django
 
 sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath('/home/kalle/g3_admindash/g3_dashboard/'))
-
 os.environ['DJANGO_SETTINGS_MODULE'] = 'g3_dashboard.settings'
 django.setup()
 

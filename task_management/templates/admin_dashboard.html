@@ -1,0 +1,27 @@
+{% extends 'home.html' %}
+{% block body%}
+    <a class="waves-effect waves-light btn-large" href="{% url 'task_management:select_uploader' %}">Assign new Task</a>
+    {% if tasks %}
+        {% for task in tasks %}
+            <div class="row">
+                <div class="col s12 m12 l12">
+                  <div class="card blue-grey darken-2">
+                    <div class="card-content white-text">
+                      <span class="card-title">{{ task.title }}</span>
+                      <span class="card-title right green-text">Assigned to: {{ task.assign_to }}</span>
+                      <p>{{ task.description }}</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="{% url 'task_management:edit_task' task.id%}">Edit task</a>
+                        <a href="{% url 'task_management:delete_task' task.id%}">Delete Task</a>
+                        <p>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3 style="color: red">No Tasks; assign new tasks !</h3>
+    {% endif %}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+{% endblock %}

@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Admin Customization &#8212; Admin Dash v0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     'v0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Avail API" href="api_call.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="admin-customization">
+<h1>Admin Customization<a class="headerlink" href="#admin-customization" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-course_management.admin">
+<span id="model-and-forms-functions-integrated-with-admin-dashboard"></span><h2>Model and Forms functions integrated with admin dashboard<a class="headerlink" href="#module-course_management.admin" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-classes.admin"></span><dl class="class">
+<dt id="classes.admin.MyUserAdmin">
+<em class="property">class </em><code class="descclassname">classes.admin.</code><code class="descname">MyUserAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="headerlink" href="#classes.admin.MyUserAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>This relation is important to read before any change:</p>
+<p>save_model: call on save a user object.</p>
+<p>get_queryset: Use to filter owners user.</p>
+<dl class="attribute">
+<dt id="classes.admin.MyUserAdmin.add_form">
+<code class="descname">add_form</code><a class="headerlink" href="#classes.admin.MyUserAdmin.add_form" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">MyUserCreationForm</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="classes.admin.MyUserAdmin.get_form">
+<code class="descname">get_form</code><span class="sig-paren">(</span><em>request</em>, <em>obj=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#classes.admin.MyUserAdmin.get_form" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter permission list.</p>
+<dl class="docutils">
+<dt>if user is super-admin:</dt>
+<dd>can see or select from all permissions avail.</dd>
+<dt>elif user is admin:</dt>
+<dd>can select or allow his own restricted permissions to any other user.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>request</strong> &#8211; </li>
+<li><strong>obj</strong> &#8211; </li>
+<li><strong>kwargs</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="classes.admin.MyUserAdmin.get_queryset">
+<code class="descname">get_queryset</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#classes.admin.MyUserAdmin.get_queryset" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>If  user is super-admin:</dt>
+<dd>return all Users</dd>
+<dt>else:</dt>
+<dd>return only created users by request.user.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>request</strong> &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">queryset</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="classes.admin.MyUserAdmin.save_model">
+<code class="descname">save_model</code><span class="sig-paren">(</span><em>request</em>, <em>obj</em>, <em>form</em>, <em>change</em><span class="sig-paren">)</span><a class="headerlink" href="#classes.admin.MyUserAdmin.save_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add owner value on every user object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>request</strong> &#8211; </li>
+<li><strong>obj</strong> &#8211; </li>
+<li><strong>form</strong> &#8211; </li>
+<li><strong>change</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-content_uploader.admin"></span><dl class="class">
+<dt id="content_uploader.admin.UploaderAdmin">
+<em class="property">class </em><code class="descclassname">content_uploader.admin.</code><code class="descname">UploaderAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="headerlink" href="#content_uploader.admin.UploaderAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a uploader via admin panel.</p>
+<dl class="method">
+<dt id="content_uploader.admin.UploaderAdmin.get_form">
+<code class="descname">get_form</code><span class="sig-paren">(</span><em>request</em>, <em>obj=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#content_uploader.admin.UploaderAdmin.get_form" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter user list</p>
+<p>return all avail_users for uploader creation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>request</strong> &#8211; </li>
+<li><strong>obj</strong> &#8211; </li>
+<li><strong>kwargs</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="content_uploader.admin.UploaderAdmin.get_queryset">
+<code class="descname">get_queryset</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#content_uploader.admin.UploaderAdmin.get_queryset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter for show users that are own by request.user.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>request</strong> &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Admin Customization</a><ul>
+<li><a class="reference internal" href="#module-course_management.admin">Model and Forms functions integrated with admin dashboard</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="api_call.html" title="previous chapter">Avail API</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/custom_admin.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Gaurav Tyagi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/custom_admin.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
